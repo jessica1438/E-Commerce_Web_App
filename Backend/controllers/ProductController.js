@@ -11,4 +11,10 @@
 //User or admin can get all review of a single product
 
 
+const getallProducts = async(req,res,next)=>{
+    res.status(200).json({
+        message:"Route is cnnected"
+    })
+}
 
+exports.getallProducts = getallProducts
