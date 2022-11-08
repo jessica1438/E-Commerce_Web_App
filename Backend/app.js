@@ -7,13 +7,12 @@ const cors = require ("cors")
 app.use(express.json())
 app.use(cors())
 
-//importing all the routes
-const order = require("./routes/OrderRoute")
-const payment = require("./routes/PaymentRoute")
-const product = require("./routes/ProductRoute")
-const user = require("./routes/UserRoute")
-const cart = require( "./routes/CartRoute")
 
+const product = require("./routes/ProductRoute")
+
+app.use("/api/v2",product)
+
+module.exports = app
 
 
 

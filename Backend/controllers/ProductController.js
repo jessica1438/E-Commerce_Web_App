@@ -13,7 +13,7 @@
 
 const getallProducts = async(req,res,next)=>{
     res.status(200).json({
-        message:"Route is connected"
+        message:"Route is cnnected"
     })
 }
 
