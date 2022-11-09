@@ -3,12 +3,9 @@ const app = require ("./app")
 const dotenv=require("dotenv")
 
 dotenv.config({
-    path:"Backend/configuration/.env"
-})
-const port = process.env.PORT;
+   path:"Backend/configuration/.env"})
 
-
-app.use (app.product)
+const port = process.env.PORT || 5000;
 
 //Create our server at the port defined by us 
 const createserver = app.listen(port,()=>{
