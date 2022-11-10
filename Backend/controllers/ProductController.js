@@ -86,3 +86,23 @@ exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
       resultPerPage,
     });
   });
+  
+// Update Product ---Admin
+exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
+    let product = await Product.findById(req.params.id);
+    if (!product) {
+      return next(new ErrorHandler("Product is not found with this id", 404));
+    }
+  
+    let images = [];
+  
+    if (typeof req.body.images === "string") {
+      images.push(req.body.images);
+    } else {
+      images = req.body.images;
+    }
+  
+    if (images !== undefined) {
+      // Delete image from cloudinary
+      for (let i = 0; i < product.images.length; i++) {
+        await cloudinary.v2.upload
