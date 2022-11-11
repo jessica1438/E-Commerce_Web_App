@@ -6,4 +6,6 @@ router.get("/product",product.getallProducts)
 
 router.post("/product/new",product.AddProduct)
 
+router.put ("/product/:id",product.updateProduct)
+
 module.exports = router;
