@@ -31,8 +31,22 @@ const getallProducts = async(req,res,next)=>{
 }
 
 const updateProduct = async(req,res,next)=>{
-    const id = req
-    const product = await productmodel.findByIdAndUpdate()
+    const id = req.params.id
+    let product = await productmodel.findById(id)
+    if (!product){
+        res.status(400).json({
+            success:false,
+            message:"Sorry :( couldn't find the product for this ID"
+        })
+    }
+    product= await productmodel.findByIdAndUpdate(id,req.body,{new:true,runValidators:true,useUnified:false})
+    
+    res.status(200).json({
+        success:true,
+        product
+    })
 }
+
 exports.getallProducts = getallProducts
 exports.AddProduct = AddProduct
+exports.updateProduct = updateProduct
