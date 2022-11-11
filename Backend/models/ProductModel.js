@@ -36,17 +36,17 @@ const productschema = new Schema ({
         type : Number,
         default:0,
     },
-    images: [
-        {public_id:{
-            type : String,
-            required : true,
-        },
-        url : {
-            type : String,
-            required : true,
-        },
-    },
-    ],
+    //images: [
+    //    {public_id:{
+    //        type : String,
+    //        required : true,
+    //    },
+    //    url : {
+    //        type : String,
+    //        required : true,
+     //   },
+    //},
+    //],
     category : {
         type: String,
         required : [true, " Please add a category for your product"],
@@ -54,17 +54,17 @@ const productschema = new Schema ({
     },
     stock : {
         type : Number,
-        required : [true,"Please add how many items are in stock currently"],
+        //required : [true,"Please add how many items are in stock currently"],
         maxLength : [2,"Amount of items cannot exceed 2 characters"],
     },
-    reviews : {
+    numofreviews : {
         type : Number,
         deafult : 0,
     },
     reviews :[
         {
             user:{
-                type : mongoose.Schema,ObjectId,
+                type : mongoose.Schema.ObjectId,
                 ref : "User",
                 required : true,
             },
