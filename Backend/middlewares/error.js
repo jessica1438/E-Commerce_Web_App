@@ -1,4 +1,4 @@
-//const ErrorHandler = require("../utils/Errorhandler")
+const ErrorHandler = require("../utils/Errorhandler")
 
 module.exports = (err,req,res,next)=>{
     err.statusCode=err.statusCode || 500
@@ -6,7 +6,7 @@ module.exports = (err,req,res,next)=>{
 
     res.status(err.statuscode).json({
         success: false,
-        error: err.message
+        message: err.message
     })
 }
 

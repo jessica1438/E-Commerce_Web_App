@@ -12,27 +12,29 @@
 
 const productmodel = require("../models/ProductModel");
 const ErrorHandler = require("../utils/errorhandler")
+const catchasyncError=require("../middlewares/catchasyncError")
 
 
-const AddProduct = async (req, res, next) => {
+
+const AddProduct = catchasyncError(async (req, res, next) => {
   const product = await productmodel.create(req.body);
 
   res.status(201).json({
     success: true,
     product,
   });
-};
+})
 
-const getallProducts = async (req, res, next) => {
+const getallProducts = catchasyncError(async (req, res, next) => {
   const product = await productmodel.find();
 
   res.status(200).json({
     success: true,
     product,
   });
-};
-
-const updateProduct = async (req, res, next) => {
+}
+)
+const updateProduct = catchasyncError(async (req, res, next) => {
   const id = req.params.id;
   let product = await productmodel.findById(id);
   if (!product) {
@@ -52,11 +54,12 @@ const updateProduct = async (req, res, next) => {
     success: true,
     product,
   });
-};
+})
 
-const deleteProduct = async (req, res, next) => {
+const deleteProduct = catchasyncError(async (req, res, next) => {
   const id = req.params.id;
   let product = await productmodel.findById(id);
+
   if (!product) {
       return next (new ErrorHandler("Product not found with this ID","404"))
     /*res.status(400).json({
@@ -70,9 +73,9 @@ const deleteProduct = async (req, res, next) => {
     success: true,
     message: "Successfully deleted the product",
   });
-};
+})
 
-const getbyId = async (req, res, next) => {
+const getbyId = catchasyncError(async (req, res, next) => {
   const id = req.params.id;
   const product = await productmodel.findById(id);
   if (!product) {
@@ -89,7 +92,7 @@ const getbyId = async (req, res, next) => {
     success: true,
     product,
   });
-};
+})
 
 exports.getallProducts = getallProducts;
 exports.AddProduct = AddProduct;
