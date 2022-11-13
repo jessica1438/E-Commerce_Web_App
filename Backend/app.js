@@ -1,18 +1,17 @@
-const express = require ("express")
-const mongoose= require("mongoose")
-const app = express()
-const cors = require ("cors")
-const productss = require("./routes/ProductRoute")
+const express = require("express");
+const mongoose = require("mongoose");
+const app = express();
+const cors = require("cors");
+const product = require("./routes/ProductRoute");
+const Error=require("./middlewares/error")
 
 
 //middlewares
-app.use(express.json())
+app.use(express.json());
 //app.use(cors())
 
+app.use("/api/v2", product);
 
-app.use("/api/v2",productss)
+app.use(Error)
 
-module.exports = app
-
-
-
+module.exports = app;

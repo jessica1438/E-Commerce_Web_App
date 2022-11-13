@@ -11,6 +11,8 @@
 //User or admin can get all review of a single product
 
 const productmodel = require("../models/ProductModel");
+const ErrorHandler = require("../utils/errorhandler")
+
 
 const AddProduct = async (req, res, next) => {
   const product = await productmodel.create(req.body);
@@ -20,6 +22,7 @@ const AddProduct = async (req, res, next) => {
     product,
   });
 };
+
 const getallProducts = async (req, res, next) => {
   const product = await productmodel.find();
 
@@ -33,10 +36,11 @@ const updateProduct = async (req, res, next) => {
   const id = req.params.id;
   let product = await productmodel.findById(id);
   if (!product) {
-    res.status(400).json({
+    return next (new ErrorHandler("Product not found with this ID","404"))
+    /*res.status(400).json({
       success: false,
       message: "Sorry :( couldn't find the product for this ID",
-    });
+    });*/
   }
   product = await productmodel.findByIdAndUpdate(id, req.body, {
     new: true,
@@ -54,38 +58,45 @@ const deleteProduct = async (req, res, next) => {
   const id = req.params.id;
   let product = await productmodel.findById(id);
   if (!product) {
-    res.status(400).json({
+      return next (new ErrorHandler("Product not found with this ID","404"))
+    /*res.status(400).json({
       success: false,
       message: "Sorry :( couldn't find the product your looking for",
-    })}
-    product = await productmodel.findByIdAndRemove(id); //if you dont need a record of the deleted document then u can use remove . Using findbyIdanddelete will return the deleted document record
+    });*/
+  }
+  product = await productmodel.findByIdAndRemove(id); //if you dont need a record of the deleted document then u can use remove . Using findbyIdanddelete will return the deleted document record
 
-    res.status(200).json({
-      success: true,
-      message: "Successfully deleted the product"
-    });
+  res.status(200).json({
+    success: true,
+    message: "Successfully deleted the product",
+  });
+};
+
+const getbyId = async (req, res, next) => {
+  const id = req.params.id;
+  const product = await productmodel.findById(id);
+  if (!product) {
+      return next(new ErrorHandler("Product not found with this ID",404))
   }
 
+    /*res.status(400).json({
+      success: false,
+      message: "Sorry ! Could not find the product you are looking for",
+    });*/
+  
 
-const getbyId = async(req,res,next)=>{
-    const id = req.params.id
-    const product = await productmodel.findById(id)
-    if(!product){
-            res.status(400).json({
-            success:false,
-            message: "Sorry ! Could not find the product you are looking for"
-        })}
-
-    res.status(200).json({
-        success:true,
-        product
-    })
-    
-    }
-
+  res.status(200).json({
+    success: true,
+    product,
+  });
+};
 
 exports.getallProducts = getallProducts;
 exports.AddProduct = AddProduct;
 exports.updateProduct = updateProduct;
 exports.deleteProduct = deleteProduct;
-exports.getbyId=getbyId
+exports.getbyId = getbyId;
+
+//make sure all the brackets are fine cuz becasue of that it can possibly not excute anything
+//for example if brackets are not right in the if(!products) then the whole code doesnt execute
+//make sure spelling is right when you create models on postman ( wrong spelling can lead to errors)
