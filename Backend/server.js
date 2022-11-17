@@ -22,10 +22,10 @@ mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology:true})
 
 //unhandled promise rejection
 
-process.on("unhandledRejection",(err)=>{
-    console.log(`Shutting down the server for ${err.message}`);
-    console.log(`Shutting down the server due to unhandled promise rejection`);
-    server.close(()=>{
-        process.exit(1)})
-    })
+//process.on("unhandledRejection",(err)=>{
+ //   console.log(`Shutting down the server for ${err.message}`);
+ //   console.log(`Shutting down the server due to unhandled promise rejection`);
+  //  server.close(()=>{
+  //      process.exit(1)})
+  //  })
 
